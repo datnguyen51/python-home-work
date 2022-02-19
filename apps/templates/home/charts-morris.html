@@ -1,0 +1,85 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Charts Morris {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+
+    <link rel="stylesheet" href="/static/assets/plugins/chart-morris/css/morris.css">
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Morris Chart</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="javascript:">Chart</a></li>
+                            <li class="breadcrumb-item"><a href="javascript:">Morris Chart</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
+        <div class="main-body">
+            <div class="">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Bar [ Simple ] Chart</h5>
+                    </div>
+                    <div class="card-block">
+                        <div id="morris-bar-chart" style="height:300px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+{% block javascripts %}
+
+<script src="/static/assets/plugins/chart-morris/js/raphael.min.js"></script>
+<script src="/static/assets/plugins/chart-morris/js/morris.min.js"></script>
+<script>
+{% if data and keys %}
+    var pieData = [
+        {% for item in keys %}
+          {
+            a: {{data[item]}},
+            y: "{{item}}"
+          },
+        {% endfor %}
+      ];
+    $(document).ready(function() {
+        setTimeout(function() {
+        Morris.Bar({
+            element: 'morris-bar-chart',
+            data: pieData,
+            xkey: 'y',
+            barSizeRatio: 0.70,
+            barGap: 1,
+            resize: true,
+            responsive:true,
+            ykeys: ['a'],
+            labels: ['Bar 1'],
+            barColors: ["0-#1de9b6-#1dc4e9"]
+        });
+    });
+});
+{% endif %}
+</script>
+
+{% endblock javascripts %}
